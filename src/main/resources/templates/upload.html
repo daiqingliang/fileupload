@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传</title>
+    <link rel="stylesheet" href="/static/zui/css/zui.css">
+    <link rel="stylesheet" href="/static/zui/lib/uploader/zui.uploader.min.css">
+    <script src="/static/zui/js/jquery-1.10.2.min.js"></script>
+    <script src="/static/zui/js/zui.js"></script>
+    <script src="/static/zui/lib/uploader/zui.uploader.min.js"></script>
+</head>
+<body>
+<div style="height:600px;width: 80%;margin:50px;border:1px solid darkblue;">
+
+    <div id='myUploader' class="uploader">
+        <div class="uploader-message text-center">
+            <div class="content"></div>
+            <button type="button" class="close">×</button>
+        </div>
+        <div class="uploader-files file-list file-list-lg"></div>
+        <div>
+            <hr class="divider">
+            <div class="uploader-status pull-right text-muted"></div>
+            <button type="button" class="btn btn-link uploader-btn-browse"><i class="icon icon-plus"></i> 选择文件</button>
+            <button type="button" class="btn btn-link uploader-btn-start"><i class="icon icon-cloud-upload"></i> 开始上传</button>
+        </div>
+    </div>
+</div>
+<script>
+$(function () {
+    //文件上传组件初始化
+    var options = {
+        url: '/upload',  // 文件上传提交地址
+        max_file_size : '20mb',//100b, 10kb, 10mb, 1gb
+        chunk_size : '20mb',//分块大小，小于这个大小的不分块
+        limitFilesCount : 4,
+        onFileUploaded : function( file){
+            console.log("单独文件上传完毕");
+            console.log(file);
+        },
+        onError : function(error){
+            console.log( error );
+        },
+        onChunkUploaded : function(file, responseObject) {
+            console.log( "CHUNK responseObject:" );
+            console.log( responseObject );
+        },
+        onUploadProgress : function( file ) {
+            //console.log(file);
+            console.log("上传进度为：" + file.percent + "%");
+        }
+    };
+    $('#myUploader').uploader(options);
+});
+</script>
+</body>
+</html>
